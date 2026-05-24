@@ -3,91 +3,37 @@ package Vista;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class Punto implements Herramienta {
 
-    private ArrayList<DatosPunto> listaPuntos;
+    private Lienzo lienzo;
     private Color colorActual = Color.BLACK;
 
-    public Punto() {
-        listaPuntos = new ArrayList<>();
+    public Punto(Lienzo lienzo) {
+        this.lienzo = lienzo;
     }
 
     @Override
     public void mousePressed(MouseEvent eventoMouse) {
+        Figura punto = new Figura("PUNTO");
 
-        listaPuntos.add(
+        punto.x = eventoMouse.getX();
+        punto.y = eventoMouse.getY();
+        punto.colorBorde = colorActual;
 
-                new DatosPunto(
+        lienzo.agregarFigura(punto);
+    }
 
-                        eventoMouse.getX(),
-                        eventoMouse.getY(),
-
-                        colorActual
-                )
-        );
+    @Override
+    public void mouseDragged(MouseEvent eventoMouse) {
     }
 
     @Override
     public void dibujar(Graphics grafico) {
-
-        for (DatosPunto datosPunto : listaPuntos) {
-
-            grafico.setColor(
-                    datosPunto.colorPunto
-            );
-
-            grafico.fillOval(
-
-                    datosPunto.coordenadaX,
-                    datosPunto.coordenadaY,
-
-                    5,
-                    5
-            );
-        }
     }
 
     @Override
-    public void mouseDragged(
-            MouseEvent eventoMouse
-    ) {
-    }
-
-    @Override
-    public void setColor(
-            Color nuevoColor
-    ) {
-
-        this.colorActual =
-                nuevoColor;
-    }
-
-    private class DatosPunto {
-
-        int coordenadaX;
-        int coordenadaY;
-
-        Color colorPunto;
-
-        public DatosPunto(
-
-                int coordenadaX,
-                int coordenadaY,
-
-                Color colorPunto
-
-        ) {
-
-            this.coordenadaX =
-                    coordenadaX;
-
-            this.coordenadaY =
-                    coordenadaY;
-
-            this.colorPunto =
-                    colorPunto;
-        }
+    public void setColor(Color nuevoColor) {
+        this.colorActual = nuevoColor;
     }
 }

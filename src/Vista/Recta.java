@@ -3,128 +3,48 @@ package Vista;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class Recta implements Herramienta {
 
-    private ArrayList<DatosRecta> listaRectas = new ArrayList<>();
-
+    private Lienzo lienzo;
     private boolean esperandoPrimerClick = true;
-
-    private int coordenadaXInicio;
-    private int coordenadaYInicio;
-
+    private int coordenadaXInicio, coordenadaYInicio;
     private Color colorActual = Color.BLACK;
+
+    public Recta(Lienzo lienzo) {
+        this.lienzo = lienzo;
+    }
 
     @Override
     public void mousePressed(MouseEvent eventoMouse) {
-
         if (esperandoPrimerClick) {
-
-            coordenadaXInicio =
-                    eventoMouse.getX();
-
-            coordenadaYInicio =
-                    eventoMouse.getY();
-
-            esperandoPrimerClick =
-                    false;
-
+            coordenadaXInicio = eventoMouse.getX();
+            coordenadaYInicio = eventoMouse.getY();
+            esperandoPrimerClick = false;
         } else {
+            Figura recta = new Figura("RECTA");
 
-            listaRectas.add(
+            recta.x1 = coordenadaXInicio;
+            recta.y1 = coordenadaYInicio;
+            recta.x2 = eventoMouse.getX();
+            recta.y2 = eventoMouse.getY();
+            recta.colorBorde = colorActual;
 
-                    new DatosRecta(
-
-                            coordenadaXInicio,
-                            coordenadaYInicio,
-
-                            eventoMouse.getX(),
-                            eventoMouse.getY(),
-
-                            colorActual
-                    )
-            );
-
-            esperandoPrimerClick =
-                    true;
+            lienzo.agregarFigura(recta);
+            esperandoPrimerClick = true;
         }
     }
 
     @Override
-    public void mouseDragged(
-            MouseEvent eventoMouse
-    ) {
+    public void mouseDragged(MouseEvent eventoMouse) {
     }
 
     @Override
-    public void dibujar(
-            Graphics grafico
-    ) {
-
-        for (DatosRecta datosRecta :
-                listaRectas) {
-
-            grafico.setColor(
-                    datosRecta.colorLinea
-            );
-
-            grafico.drawLine(
-
-                    datosRecta.coordenadaXInicio,
-                    datosRecta.coordenadaYInicio,
-
-                    datosRecta.coordenadaXFin,
-                    datosRecta.coordenadaYFin
-            );
-        }
+    public void dibujar(Graphics grafico) {
     }
 
     @Override
-    public void setColor(
-            Color nuevoColor
-    ) {
-
-        this.colorActual =
-                nuevoColor;
-    }
-
-    private class DatosRecta {
-
-        int coordenadaXInicio;
-        int coordenadaYInicio;
-
-        int coordenadaXFin;
-        int coordenadaYFin;
-
-        Color colorLinea;
-
-        public DatosRecta(
-
-                int coordenadaXInicio,
-                int coordenadaYInicio,
-
-                int coordenadaXFin,
-                int coordenadaYFin,
-
-                Color colorLinea
-
-        ) {
-
-            this.coordenadaXInicio =
-                    coordenadaXInicio;
-
-            this.coordenadaYInicio =
-                    coordenadaYInicio;
-
-            this.coordenadaXFin =
-                    coordenadaXFin;
-
-            this.coordenadaYFin =
-                    coordenadaYFin;
-
-            this.colorLinea =
-                    colorLinea;
-        }
+    public void setColor(Color nuevoColor) {
+        this.colorActual = nuevoColor;
     }
 }

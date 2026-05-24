@@ -403,6 +403,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     //GETTERS CONTROLADOR
+    public javax.swing.JMenuItem getNuevo() {
+        return jcbMenuNuevo;
+    }
+
     public javax.swing.JMenuItem getGuardar() {
         return jcbMenuGuardar;
     }
